@@ -478,8 +478,25 @@ function extractEmails(str) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  let strResult = '';
+  for (let i = 0; i < str.length; i += 1) {
+    const symbol = str[i];
+    let iterator = 0;
+    if (
+      (symbol.codePointAt(0) >= 65 && symbol.codePointAt(0) <= 77) ||
+      (symbol.codePointAt(0) >= 97 && symbol.codePointAt(0) <= 109)
+    ) {
+      iterator = 1;
+    } else if (
+      (symbol.codePointAt(0) >= 78 && symbol.codePointAt(0) <= 90) ||
+      (symbol.codePointAt(0) >= 110 && symbol.codePointAt(0) <= 122)
+    ) {
+      iterator = -1;
+    }
+    strResult += String.fromCodePoint(symbol.codePointAt(0) + 13 * iterator);
+  }
+  return strResult;
 }
 
 /**
@@ -506,8 +523,62 @@ function encodeToRot13(/* str */) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
+function getCardId(value) {
+  const cards = [
+    'A♣',
+    '2♣',
+    '3♣',
+    '4♣',
+    '5♣',
+    '6♣',
+    '7♣',
+    '8♣',
+    '9♣',
+    '10♣',
+    'J♣',
+    'Q♣',
+    'K♣',
+    'A♦',
+    '2♦',
+    '3♦',
+    '4♦',
+    '5♦',
+    '6♦',
+    '7♦',
+    '8♦',
+    '9♦',
+    '10♦',
+    'J♦',
+    'Q♦',
+    'K♦',
+    'A♥',
+    '2♥',
+    '3♥',
+    '4♥',
+    '5♥',
+    '6♥',
+    '7♥',
+    '8♥',
+    '9♥',
+    '10♥',
+    'J♥',
+    'Q♥',
+    'K♥',
+    'A♠',
+    '2♠',
+    '3♠',
+    '4♠',
+    '5♠',
+    '6♠',
+    '7♠',
+    '8♠',
+    '9♠',
+    '10♠',
+    'J♠',
+    'Q♠',
+    'K♠',
+  ];
+  return cards.findIndex((e) => e === value);
 }
 
 module.exports = {
